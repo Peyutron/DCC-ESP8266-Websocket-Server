@@ -34,11 +34,7 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       break;
     case WStype_CONNECTED:
         webSocket.sendTXT(num, "Conectado");
-        // Serial.println(F("Conectado"));
-        Serial.print(F("<I"));        // Comando "I" en https://github.com/Peyutron/DCCpp_LMD
-        Serial.print(WiFi.localIP()); // para mostrar IP en pantalla OLED
-        Serial.println(F(">"));            
-
+        Serial.println(F("Conectado"));
       break;
     case WStype_TEXT: {
         String text = String((char *) &payload[0]);
@@ -55,9 +51,15 @@ void setup() {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
+    Serial.println(F("Reconectando.."));
     delay(500);
   }
-  Serial.println(WiFi.localIP());
+  delay(3000);
+  // Serial.println(WiFi.localIP());
+  Serial.print(F("<I"));        // Comando "I" en https://github.com/Peyutron/DCCpp_LMD
+  Serial.print(WiFi.localIP()); // para mostrar IP en pantalla OLED
+  Serial.println(F(">"));            
+
   webSocket.begin();
   webSocket.onEvent(webSocketEvent);
 }
