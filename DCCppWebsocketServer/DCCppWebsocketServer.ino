@@ -14,7 +14,7 @@
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
 #include <WebSocketsServer.h>
-#define PUERTO 8080
+#define PUERTO 2560
 
 WebSocketsServer webSocket = WebSocketsServer(PUERTO);
 
@@ -34,7 +34,10 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t * payload, size_t lenght
       break;
     case WStype_CONNECTED:
         webSocket.sendTXT(num, "Conectado");
-        Serial.println(F("Conectado"));
+        // Serial.println(F("Conectado"));
+        Serial.print(F("<I"));        // Comando "I" en https://github.com/Peyutron/DCCpp_LMD
+        Serial.print(WiFi.localIP()); // para mostrar IP en pantalla OLED
+        Serial.println(F(">"));            
 
       break;
     case WStype_TEXT: {
